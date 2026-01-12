@@ -4,220 +4,98 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Diario de Zenjey</title>
-  <style>
-    :root {
-      --teal:#3bb5a7;
-      --blue:#a8d0ff;
-      --pink:#f7c6d0;
-      --coral:#ff7f86;
-      --paper:#fff;
-      --ink:#333;
-    }
-
-    body {
-      margin:0;
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, var(--teal), var(--blue), var(--pink), var(--coral));
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      color: var(--ink);
-    }
-
-    @keyframes gradient {
-      0% {background-position:0% 50%;}
-      50% {background-position:100% 50%;}
-      100% {background-position:0% 50%;}
-    }
-
-    header {
-      text-align:center;
-      padding:2rem 1rem;
-      color:#fff;
-    }
-    header h1 {
-      font-size:2rem;
-      margin:0;
-      letter-spacing:2px;
-    }
-    header p {
-      font-size:1rem;
-      opacity:.9;
-    }
-
-    nav {
-      display:flex;
-      justify-content:center;
-      gap:1rem;
-      background:#fff;
-      padding:.8rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.1);
-      position:sticky;
-      top:0;
-      z-index:10;
-    }
-    nav button {
-      border:none;
-      padding:.7rem 1.2rem;
-      border-radius:25px;
-      font-weight:600;
-      cursor:pointer;
-      transition:.3s;
-      background:var(--teal);
-      color:#fff;
-    }
-    nav button:hover {
-      transform:translateY(-2px);
-      filter:brightness(1.1);
-    }
-    nav button.active {
-      background:var(--coral);
-    }
-
-    section {
-      max-width:900px;
-      margin:2rem auto;
-      background:var(--paper);
-      border-radius:16px;
-      padding:2rem;
-      box-shadow:0 6px 20px rgba(0,0,0,.1);
-      display:none;
-      animation:fade .4s ease;
-    }
-    section.active {display:block;}
-
-    @keyframes fade {
-      from {opacity:0; transform:translateY(10px);}
-      to {opacity:1; transform:translateY(0);}
-    }
-
-    h2 {
-      margin-top:0;
-      color:var(--teal);
-    }
-
-    .add-btn {
-      display:inline-block;
-      margin:1rem 0;
-      padding:.6rem 1rem;
-      border:none;
-      border-radius:20px;
-      background:var(--pink);
-      color:#333;
-      font-weight:600;
-      cursor:pointer;
-      transition:.3s;
-    }
-    .add-btn:hover {
-      background:var(--coral);
-      color:#fff;
-    }
-
-    .card {
-      background:#fafafa;
-      border-radius:12px;
-      padding:1rem;
-      margin:.8rem 0;
-      box-shadow:0 4px 12px rgba(0,0,0,.08);
-    }
-    .card h3 {margin:.2rem 0;}
-    .card textarea {
-      width:100%;
-      min-height:100px;
-      border-radius:10px;
-      border:1px solid #ddd;
-      padding:.6rem;
-      resize:vertical;
-      font-family:inherit;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>EL DIARIO DE ZENJEY</h1>
-    <p>JEY: Seijaku · Entelequia · Yūgen</p>
-  </header>
+  <!-- Página principal -->
+  <section id="bienvenida" class="active">
+    <h1>🌸 Bienvenido a tu Diario de Zenjey</h1>
+    <p>Escribe tu nombre para comenzar:</p>
+    <input id="nombreUsuario" placeholder="Tu nombre">
+    <button onclick="guardarNombre()">Guardar nombre</button>
+    <p>O di en voz alta: <strong>“Abrir mi diario”</strong></p>
+    <button onclick="iniciarVoz()">🎤 Usar voz</button>
+  </section>
 
-  <nav>
+  <!-- Menú -->
+  <nav style="display:none;" id="menu">
     <button class="active" data-target="seijaku">Seijaku</button>
     <button data-target="entelequia">Entelequia</button>
     <button data-target="yugen">Yūgen</button>
+    <button data-target="progreso">Progreso</button>
+    <button data-target="logros">Logros</button>
   </nav>
 
   <!-- Seijaku -->
-  <section id="seijaku" class="active">
+  <section id="seijaku">
     <h2>🧘 Seijaku — Núcleo emocional</h2>
-    <p>Un espacio para la calma: botón de pausa, semáforo emocional, respiración y reflexiones guiadas.</p>
-    <button class="add-btn" onclick="addCard('seijaku')">+ Agregar página de calma</button>
-    <div id="cards-seijaku">
-      <div class="card">
-        <h3>Ejercicio de respiración</h3>
-        <textarea placeholder="Inhala 4, sostén 2, exhala 6... escribe cómo te sientes."></textarea>
-      </div>
-      <div class="card">
-        <h3>Semáforo emocional</h3>
-        <textarea placeholder="Escribe tu estado: verde, amarillo o rojo. Reflexiona antes y después."></textarea>
-      </div>
-    </div>
+    <button onclick="iniciarRespiracion()">Iniciar respiración guiada</button>
+    <div id="respiracion-texto"></div>
+
+    <h3>Semáforo emocional</h3>
+    <button onclick="registrarEstado('verde')">🟢 Tranquilo</button>
+    <button onclick="registrarEstado('amarillo')">🟡 Inquieto</button>
+    <button onclick="registrarEstado('azul')">🔵 Reflexivo</button>
+    <button onclick="registrarEstado('rojo')">🔴 Triste</button>
   </section>
 
   <!-- Entelequia -->
   <section id="entelequia">
-    <h2>🌟 Entelequia — Sueños y visiones</h2>
-    <p>Un rincón para tus metas, proyectos y economía consciente.</p>
-    <button class="add-btn" onclick="addCard('entelequia')">+ Agregar página de sueños</button>
-    <div id="cards-entelequia">
-      <div class="card">
-        <h3>Deseos vs. necesidades</h3>
-        <textarea placeholder="Anota tu decisión y reflexiona si nace de una emoción o necesidad."></textarea>
-      </div>
-      <div class="card">
-        <h3>Visión futura</h3>
-        <textarea placeholder="Escribe una carta a tu yo del mañana."></textarea>
-      </div>
-    </div>
+    <h2>🌟 Entelequia — Sueños y economía consciente</h2>
+    <input id="decision-texto" placeholder="Ej. Quiero comprar una mochila">
+    <select id="decision-tipo">
+      <option value="deseo">Deseo</option>
+      <option value="necesidad">Necesidad</option>
+    </select>
+    <button onclick="guardarDecision()">Guardar decisión</button>
+
+    <h3>Visión futura</h3>
+    <textarea id="vision-texto" placeholder="Querido yo del mañana..."></textarea>
+    <button onclick="guardarVision()">Guardar carta</button>
   </section>
 
   <!-- Yūgen -->
   <section id="yugen">
     <h2>🎨 Yūgen — Arte y poesía</h2>
-    <p>Un espacio para lo poético, lo invisible y lo creativo.</p>
-    <button class="add-btn" onclick="addCard('yugen')">+ Agregar página de arte</button>
-    <div id="cards-yugen">
-      <div class="card">
-        <h3>Poema libre</h3>
-        <textarea placeholder="Escribe versos que reflejen tu estado emocional."></textarea>
-      </div>
-      <div class="card">
-        <h3>Manualidad sugerida</h3>
-        <textarea placeholder="Origami, collage o dibujo... describe tu creación."></textarea>
-      </div>
-    </div>
+    <textarea id="poema-texto" placeholder="Escribe tu poema..."></textarea>
+    <button onclick="guardarPoema()">Guardar poema</button>
+
+    <h3>Dibujo libre</h3>
+    <canvas id="lienzo" width="300" height="200" style="border:1px solid #ccc;"></canvas>
+
+    <h3>Inspiración</h3>
+    <button onclick="sugerirFrase()">Frase inspiradora</button>
+    <button onclick="sugerirManualidad()">Manualidad</button>
+    <div id="inspiracion"></div>
   </section>
 
-  <script>
-    // Navegación
-    const buttons = document.querySelectorAll("nav button");
-    const sections = document.querySelectorAll("section");
-    buttons.forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        buttons.forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        sections.forEach(sec=>sec.classList.remove("active"));
-        document.getElementById(btn.dataset.target).classList.add("active");
-      });
-    });
+  <!-- Progreso -->
+  <section id="progreso">
+    <h2>📊 Progreso emocional</h2>
+    <canvas id="graficoEmociones"></canvas>
+    <h2>📈 Decisiones</h2>
+    <canvas id="graficoDecisiones"></canvas>
+  </section>
 
-    // Agregar tarjetas
-    function addCard(section){
-      const container = document.getElementById("cards-"+section);
-      const card = document.createElement("div");
-      card.className="card";
-      card.innerHTML=`
-        <h3>Nueva página</h3>
-        <textarea placeholder="Escribe aquí..."></textarea>
-      `;
-      container.appendChild(card);
-    }
-  </script>
+  <!-- Logros -->
+  <section id="logros">
+    <h2>🌳 Tu jardín emocional</h2>
+    <div id="logros-contenido"></div>
+    <h3>🎯 Reto diario</h3>
+    <button onclick="retoDiario()">Mostrar reto</button>
+    <div id="reto"></div>
+  </section>
+
+  <!-- Personalización -->
+  <section id="personalizacion">
+    <h2>🎶 Personaliza tu diario</h2>
+    <input type="file" accept="image/*" onchange="cambiarFondo(event)">
+    <input type="color" onchange="cambiarColor(event)">
+    <input type="file" accept="audio/*" onchange="cargarMusica(event)">
+    <audio id="musica" controls></audio>
+  </section>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
