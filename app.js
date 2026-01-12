@@ -1,10 +1,4 @@
-¡Perfecto, Deyanira 🌸! Aquí tienes el **`app.js` completo y cerrado**, con todas las funciones integradas: bienvenida con nombre y contraseña, voz con reconocimiento, sonido y pantalla de carga, respiración, semáforo, decisiones, visión futura, poemas, dibujo, inspiración, gráficos, logros, retos diarios y retos fuera con pasos + videos de YouTube, además de personalización persistente de fondo y música.  
 
----
-
-## ⚙️ app.js
-
-```javascript
 // ==================== Bienvenida con nombre y contraseña ====================
 function guardarCredenciales(){
   const nombre=document.getElementById("nombreUsuario").value;
@@ -261,3 +255,4 @@ function guardarRacha(tipo){
   if(rachas[tipo]===7){alert("🌟 Has desbloqueado: 'Tu serenidad inspira'");}
 }
 function
+
