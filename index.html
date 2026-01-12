@@ -11,12 +11,23 @@
   <!-- Página principal -->
   <section id="bienvenida" class="active">
     <h1>🌸 Bienvenido a tu Diario de Zenjey</h1>
-    <p>Escribe tu nombre para comenzar:</p>
+    <p>Escribe tu nombre y contraseña para comenzar:</p>
     <input id="nombreUsuario" placeholder="Tu nombre">
-    <button onclick="guardarNombre()">Guardar nombre</button>
+    <input id="claveUsuario" type="password" placeholder="Tu contraseña">
+    <button onclick="guardarCredenciales()">Guardar</button>
+    <button onclick="iniciarSesion()">Abrir diario</button>
     <p>O di en voz alta: <strong>“Abrir mi diario”</strong></p>
     <button onclick="iniciarVoz()">🎤 Usar voz</button>
   </section>
+
+  <!-- Overlay de carga -->
+  <div id="overlay-cargando" aria-hidden="true">
+    <div class="spinner"></div>
+    <p>Cargando tu diario...</p>
+  </div>
+
+  <!-- Sonido de apertura -->
+  <audio id="sonido-apertura" src="tu-sonido.mp3"></audio>
 
   <!-- Menú -->
   <nav style="display:none;" id="menu">
@@ -25,9 +36,11 @@
     <button data-target="yugen">Yūgen</button>
     <button data-target="progreso">Progreso</button>
     <button data-target="logros">Logros</button>
+    <button data-target="retos-fuera">Retos fuera</button>
+    <button data-target="personalizacion">Personalización</button>
   </nav>
 
-  <!-- Seijaku -->
+  <!-- Secciones -->
   <section id="seijaku">
     <h2>🧘 Seijaku — Núcleo emocional</h2>
     <button onclick="iniciarRespiracion()">Iniciar respiración guiada</button>
@@ -40,7 +53,6 @@
     <button onclick="registrarEstado('rojo')">🔴 Triste</button>
   </section>
 
-  <!-- Entelequia -->
   <section id="entelequia">
     <h2>🌟 Entelequia — Sueños y economía consciente</h2>
     <input id="decision-texto" placeholder="Ej. Quiero comprar una mochila">
@@ -55,7 +67,6 @@
     <button onclick="guardarVision()">Guardar carta</button>
   </section>
 
-  <!-- Yūgen -->
   <section id="yugen">
     <h2>🎨 Yūgen — Arte y poesía</h2>
     <textarea id="poema-texto" placeholder="Escribe tu poema..."></textarea>
@@ -70,7 +81,6 @@
     <div id="inspiracion"></div>
   </section>
 
-  <!-- Progreso -->
   <section id="progreso">
     <h2>📊 Progreso emocional</h2>
     <canvas id="graficoEmociones"></canvas>
@@ -78,7 +88,6 @@
     <canvas id="graficoDecisiones"></canvas>
   </section>
 
-  <!-- Logros -->
   <section id="logros">
     <h2>🌳 Tu jardín emocional</h2>
     <div id="logros-contenido"></div>
@@ -87,16 +96,21 @@
     <div id="reto"></div>
   </section>
 
-  <!-- Personalización -->
+  <section id="retos-fuera">
+    <h2>🌟 Retos fuera de la app</h2>
+    <button onclick="generarRetoFuera()">Generar reto</button>
+    <div id="reto-fuera"></div>
+  </section>
+
   <section id="personalizacion">
     <h2>🎶 Personaliza tu diario</h2>
+    <p><strong>Fondo:</strong> Elige una imagen</p>
     <input type="file" accept="image/*" onchange="cambiarFondo(event)">
-    <input type="color" onchange="cambiarColor(event)">
+    <p><strong>Música:</strong> Sube tu pista favorita</p>
     <input type="file" accept="audio/*" onchange="cargarMusica(event)">
     <audio id="musica" controls></audio>
   </section>
 
-<script src="app.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
-
