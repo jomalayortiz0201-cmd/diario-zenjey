@@ -243,16 +243,56 @@ function dibujarGraficos(){
     }
   });
 }
-
-// ==================== Logros ====================
-function guardarRacha(tipo){
+function mostrarLogros(){
   const rachas=JSON.parse(localStorage.getItem("rachas")||"{}");
-  rachas[tipo]=(rachas[tipo]||0)+1;
-  localStorage.setItem("rachas",JSON.stringify(rachas));
+  const logros=document.getElementById("logros-contenido");
+  logros.innerHTML="";
 
-  if(rachas[tipo]===3){alert("🌟 Has desbloqueado: 'Tu calma es tu superpoder'");}
-  if(rachas[tipo]===5){alert("🌟 Has desbloqueado: 'Cada día floreces más'");}
-  if(rachas[tipo]===7){alert("🌟 Has desbloqueado: 'Tu serenidad inspira'");}
+  const frases={
+    respiracion:"🌿 Practaste respiración consciente",
+    emociones:"🎨 Registraste tus emociones",
+    decisiones:"💡 Tomaste decisiones conscientes",
+    poemas:"📝 Escribiste poesía emocional"
+  };
+
+  for(const tipo in rachas){
+    if(rachas[tipo]>=3){
+      const item=document.createElement("p");
+      item.textContent=`${frases[tipo]} (${rachas[tipo]} veces)`;
+      logros.appendChild(item);
+    }
+  }
 }
-function
-
+function retoDiario(){
+  const retos=[
+    "Escribe una carta a tu yo del futuro.",
+    "Haz una pausa de 3 minutos para respirar.",
+    "Dibuja cómo te sientes hoy.",
+    "Haz una lista de 3 deseos y 3 necesidades.",
+    "Escribe un poema con la palabra 'luz'."
+  ];
+  const reto=retos[Math.floor(Math.random()*retos.length)];
+  document.getElementById("reto").textContent=reto;
+}
+function generarRetoFuera(){
+  const retos=[
+    {
+      titulo:"🌿 Camina descalza sobre el césped",
+      pasos:["Busca un lugar seguro","Respira profundamente","Camina sintiendo cada paso"],
+      video:"https://www.youtube.com/embed/3ZJ1z9z4qkE"
+    },
+    {
+      titulo:"🎶 Crea una canción con sonidos de tu casa",
+      pasos:["Graba sonidos con tu celular","Usa una app para mezclarlos","Ponle un nombre creativo"],
+      video:"https://www.youtube.com/embed/2VJ3bH3P4xg"
+    },
+    {
+      titulo:"🧵 Haz una pulsera con hilos",
+      pasos:["Elige 3 colores","Haz un nudo inicial","Trenza con paciencia"],
+      video:"https://www.youtube.com/embed/3Z3z9z9z9z"
+    }
+  ];
+  const reto=retos[Math.floor(Math.random()*retos.length)];
+  const contenedor=document.getElementById("reto-fuera");
+  contenedor.innerHTML=`<h3>${reto.titulo}</h3><ul>${reto.pasos.map(p=>`<li>${p}</li>`).join("")}</ul><iframe width="300" height="170" src="${reto.video}" frameborder="0" allowfullscreen></iframe>`;
+}
