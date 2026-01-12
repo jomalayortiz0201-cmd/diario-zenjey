@@ -274,25 +274,80 @@ function retoDiario(){
   const reto=retos[Math.floor(Math.random()*retos.length)];
   document.getElementById("reto").textContent=reto;
 }
+// ==================== Retos fuera de la app ====================
 function generarRetoFuera(){
   const retos=[
     {
       titulo:"🌿 Camina descalza sobre el césped",
-      pasos:["Busca un lugar seguro","Respira profundamente","Camina sintiendo cada paso"],
-      video:"https://www.youtube.com/embed/3ZJ1z9z4qkE"
+      pasos:[
+        "Busca un lugar seguro con césped o tierra limpia.",
+        "Quítate los zapatos y siente el suelo bajo tus pies.",
+        "Respira profundamente mientras caminas lentamente.",
+        "Concéntrate en las sensaciones: frescura, textura, temperatura.",
+        "Al terminar, agradece el momento de conexión con la naturaleza."
+      ]
     },
     {
       titulo:"🎶 Crea una canción con sonidos de tu casa",
-      pasos:["Graba sonidos con tu celular","Usa una app para mezclarlos","Ponle un nombre creativo"],
-      video:"https://www.youtube.com/embed/2VJ3bH3P4xg"
+      pasos:[
+        "Elige objetos que produzcan sonidos (vasos, cucharas, puertas).",
+        "Golpéalos suavemente o hazlos sonar de diferentes maneras.",
+        "Graba los sonidos con tu celular.",
+        "Escucha y combina los sonidos como si fueran instrumentos.",
+        "Ponle un nombre creativo a tu canción."
+      ]
     },
     {
       titulo:"🧵 Haz una pulsera con hilos",
-      pasos:["Elige 3 colores","Haz un nudo inicial","Trenza con paciencia"],
-      video:"https://www.youtube.com/embed/3Z3z9z9z9z"
+      pasos:[
+        "Elige tres colores de hilo o lana.",
+        "Corta tiras largas y haz un nudo inicial.",
+        "Trenza los hilos con calma y paciencia.",
+        "Al llegar al final, haz un nudo fuerte.",
+        "Lleva tu pulsera como símbolo de tu creatividad."
+      ]
+    },
+    {
+      titulo:"📖 Escribe una carta a tu yo del futuro",
+      pasos:[
+        "Busca un lugar tranquilo y toma papel y lápiz.",
+        "Imagina cómo quieres estar dentro de 5 años.",
+        "Escribe tus sueños, metas y consejos para tu yo futuro.",
+        "Guarda la carta en un sobre y ponle la fecha.",
+        "Decide cuándo volverás a leerla."
+      ]
+    },
+    {
+      titulo:"🌸 Haz un mandala con objetos naturales",
+      pasos:[
+        "Sal a caminar y recoge hojas, piedras o flores.",
+        "En casa, limpia los objetos y colócalos en círculo.",
+        "Organiza los elementos formando patrones simétricos.",
+        "Admira tu mandala y tómale una foto.",
+        "Al terminar, devuelve los objetos a la naturaleza."
+      ]
+    },
+    {
+      titulo:"🕯️ Crea tu rincón de calma",
+      pasos:[
+        "Elige un espacio pequeño en tu casa.",
+        "Coloca una vela, una planta o un objeto que te dé paz.",
+        "Pon música suave o simplemente guarda silencio.",
+        "Siéntate allí unos minutos cada día.",
+        "Usa ese rincón como refugio emocional."
+      ]
     }
   ];
+
+  // Seleccionar un reto al azar
   const reto=retos[Math.floor(Math.random()*retos.length)];
+
+  // Mostrar en la página
   const contenedor=document.getElementById("reto-fuera");
-  contenedor.innerHTML=`<h3>${reto.titulo}</h3><ul>${reto.pasos.map(p=>`<li>${p}</li>`).join("")}</ul><iframe width="300" height="170" src="${reto.video}" frameborder="0" allowfullscreen></iframe>`;
+  contenedor.innerHTML=`
+    <h3>${reto.titulo}</h3>
+    <ol>
+      ${reto.pasos.map(p=>`<li>${p}</li>`).join("")}
+    </ol>
+  `;
 }
