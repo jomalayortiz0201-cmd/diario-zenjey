@@ -291,9 +291,9 @@ function generarRetoFuera(){
       titulo:"🎶 Crea una canción con sonidos de tu casa",
       pasos:[
         "Elige objetos que produzcan sonidos (vasos, cucharas, puertas).",
-        "Golpéalos suavemente o hazlos sonar de diferentes maneras.",
+        "Hazlos sonar de diferentes maneras y escucha con atención.",
         "Graba los sonidos con tu celular.",
-        "Escucha y combina los sonidos como si fueran instrumentos.",
+        "Combínalos como si fueran instrumentos musicales.",
         "Ponle un nombre creativo a tu canción."
       ]
     },
@@ -342,7 +342,7 @@ function generarRetoFuera(){
   // Seleccionar un reto al azar
   const reto=retos[Math.floor(Math.random()*retos.length)];
 
-  // Mostrar en la página
+  // Mostrar en la página (solo texto y pasos, sin enlaces)
   const contenedor=document.getElementById("reto-fuera");
   contenedor.innerHTML=`
     <h3>${reto.titulo}</h3>
@@ -351,3 +351,6 @@ function generarRetoFuera(){
     </ol>
   `;
 }
+
+
+
