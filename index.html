@@ -72,8 +72,19 @@
     <textarea id="poema-texto" placeholder="Escribe tu poema..."></textarea>
     <button onclick="guardarPoema()">Guardar poema</button>
 
-    <h3>Dibujo libre</h3>
-    <canvas id="lienzo" width="300" height="200" style="border:1px solid #ccc;"></canvas>
+   <h3>Dibujo libre</h3>
+<div>
+  <label>🎨 Color: </label>
+  <input type="color" id="colorPincel" value="#000000">
+  <label>✏️ Grosor: </label>
+  <input type="range" id="grosorPincel" min="1" max="20" value="2">
+</div>
+<canvas id="lienzo" width="400" height="250" style="border:1px solid #ccc;"></canvas>
+<div>
+  <button onclick="limpiarLienzo()">🧹 Limpiar</button>
+  <button onclick="guardarDibujo()">💾 Guardar dibujo</button>
+</div>
+<div id="galeria-dibujos"></div>
 
     <h3>Inspiración</h3>
     <button onclick="sugerirFrase()">Frase inspiradora</button>
@@ -114,3 +125,4 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+
