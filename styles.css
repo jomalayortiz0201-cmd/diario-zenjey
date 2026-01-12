@@ -34,5 +34,38 @@ section {
 section.active {display:block;}
 
 #bienvenida {text-align:center;}
-#logros ul {list-style:none; padding:0;}
-#logros li {margin:.5rem 0; font-weight:600;}
+
+#reto, #reto-fuera {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  padding: 1.5rem;
+  border-left: 8px solid var(--teal);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  margin-top: 1.5rem;
+}
+
+/* Overlay de carga */
+#overlay-cargando {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  text-align: center;
+  color: var(--ink);
+}
+#overlay-cargando.active { display: flex; }
+.spinner {
+  width: 48px; height: 48px;
+  border: 5px solid #ddd;
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: .8rem;
+}
+@keyframes spin { to { transform: rotate(360deg);} }
