@@ -1,149 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Diario de Zenjey</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --teal:#3bb5a7;
+      --blue:#a8d0ff;
+      --pink:#f7c6d0;
+      --coral:#ff7f86;
+      --paper:#fff;
+      --ink:#333;
+    }
+
+    body {
+      margin:0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--teal), var(--blue), var(--pink), var(--coral));
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      color: var(--ink);
+    }
+
+    @keyframes gradient {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+
+    header {
+      text-align:center;
+      padding:2rem 1rem;
+      color:#fff;
+    }
+    header h1 {
+      font-size:2rem;
+      margin:0;
+      letter-spacing:2px;
+    }
+    header p {
+      font-size:1rem;
+      opacity:.9;
+    }
+
+    nav {
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+      background:#fff;
+      padding:.8rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    nav button {
+      border:none;
+      padding:.7rem 1.2rem;
+      border-radius:25px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.3s;
+      background:var(--teal);
+      color:#fff;
+    }
+    nav button:hover {
+      transform:translateY(-2px);
+      filter:brightness(1.1);
+    }
+    nav button.active {
+      background:var(--coral);
+    }
+
+    section {
+      max-width:900px;
+      margin:2rem auto;
+      background:var(--paper);
+      border-radius:16px;
+      padding:2rem;
+      box-shadow:0 6px 20px rgba(0,0,0,.1);
+      display:none;
+      animation:fade .4s ease;
+    }
+    section.active {display:block;}
+
+    @keyframes fade {
+      from {opacity:0; transform:translateY(10px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+
+    h2 {
+      margin-top:0;
+      color:var(--teal);
+    }
+
+    .add-btn {
+      display:inline-block;
+      margin:1rem 0;
+      padding:.6rem 1rem;
+      border:none;
+      border-radius:20px;
+      background:var(--pink);
+      color:#333;
+      font-weight:600;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .add-btn:hover {
+      background:var(--coral);
+      color:#fff;
+    }
+
+    .card {
+      background:#fafafa;
+      border-radius:12px;
+      padding:1rem;
+      margin:.8rem 0;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .card h3 {margin:.2rem 0;}
+    .card textarea {
+      width:100%;
+      min-height:100px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      padding:.6rem;
+      resize:vertical;
+      font-family:inherit;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <h1>El Diario de Zenjey</h1>
-    <p>Respira. Escribe. Crece.</p>
+  <header>
+    <h1>EL DIARIO DE ZENJEY</h1>
+    <p>JEY: Seijaku · Entelequia · Yūgen</p>
   </header>
 
-  <main class="container">
-    <!-- Núcleo emocional -->
-    <section class="card" id="nucleo-emocional">
-      <h2>🧘‍♂️ Núcleo emocional</h2>
+  <nav>
+    <button class="active" data-target="seijaku">Seijaku</button>
+    <button data-target="entelequia">Entelequia</button>
+    <button data-target="yugen">Yūgen</button>
+  </nav>
 
-      <div class="block">
-        <!-- Botón animado de pausa -->
-        <div class="container">
-          <input type="checkbox" id="pauseBtn">
-          <label for="pauseBtn" class="button">
-            <span class="icon">
-              <!-- Ícono de pausa en SVG -->
-              <svg viewBox="0 0 24 24">
-                <rect x="6" y="5" width="4" height="14"/>
-                <rect x="14" y="5" width="4" height="14"/>
-              </svg>
-            </span>
-          </label>
-        </div>
-        <p id="breathingGuide" class="muted">Pulsa “pausa” para una guía de 3 respiraciones.</p>
+  <!-- Seijaku -->
+  <section id="seijaku" class="active">
+    <h2>🧘 Seijaku — Núcleo emocional</h2>
+    <p>Un espacio para la calma: botón de pausa, semáforo emocional, respiración y reflexiones guiadas.</p>
+    <button class="add-btn" onclick="addCard('seijaku')">+ Agregar página de calma</button>
+    <div id="cards-seijaku">
+      <div class="card">
+        <h3>Ejercicio de respiración</h3>
+        <textarea placeholder="Inhala 4, sostén 2, exhala 6... escribe cómo te sientes."></textarea>
       </div>
-
-      <!-- Semáforo emocional -->
-      <div class="block">
+      <div class="card">
         <h3>Semáforo emocional</h3>
-        <div class="traffic-light">
-          <button class="light green" data-emotion="verde">Verde (calma)</button>
-          <button class="light yellow" data-emotion="amarillo">Amarillo (alerta)</button>
-          <button class="light red" data-emotion="rojo">Rojo (intenso)</button>
-        </div>
-        <div class="compare">
-          <label>Antes:
-            <select id="beforeEmotion">
-              <option value="">Selecciona</option>
-              <option value="verde">Verde</option>
-              <option value="amarillo">Amarillo</option>
-              <option value="rojo">Rojo</option>
-            </select>
-          </label>
-          <label>Después:
-            <select id="afterEmotion">
-              <option value="">Selecciona</option>
-              <option value="verde">Verde</option>
-              <option value="amarillo">Amarillo</option>
-              <option value="rojo">Rojo</option>
-            </select>
-          </label>
-          <button id="saveComparison" class="btn">Guardar comparación</button>
-          <p id="comparisonMsg" class="success"></p>
-        </div>
+        <textarea placeholder="Escribe tu estado: verde, amarillo o rojo. Reflexiona antes y después."></textarea>
       </div>
+    </div>
+  </section>
 
-      <!-- Minuto Zen -->
-      <div class="block">
-        <h3>Minuto Zen</h3>
-        <p class="muted">Un minuto de calma guiada.</p>
-        <div class="timer">
-          <span id="timerDisplay">01:00</span>
-          <button id="startTimer" class="btn">Iniciar</button>
-          <button id="resetTimer" class="btn btn-secondary">Reiniciar</button>
-        </div>
+  <!-- Entelequia -->
+  <section id="entelequia">
+    <h2>🌟 Entelequia — Sueños y visiones</h2>
+    <p>Un rincón para tus metas, proyectos y economía consciente.</p>
+    <button class="add-btn" onclick="addCard('entelequia')">+ Agregar página de sueños</button>
+    <div id="cards-entelequia">
+      <div class="card">
+        <h3>Deseos vs. necesidades</h3>
+        <textarea placeholder="Anota tu decisión y reflexiona si nace de una emoción o necesidad."></textarea>
       </div>
-    </section>
-
-    <!-- Gestión de la tristeza -->
-    <section class="card" id="gestion-tristeza">
-      <h2>🌙 Gestión de la tristeza</h2>
-      <div class="block">
-        <textarea id="sadWriting" rows="4" placeholder="Escribe libremente lo que sientes..."></textarea>
-        <button id="saveSadWriting" class="btn">Guardar reflexión</button>
-        <p id="sadMsg" class="success"></p>
+      <div class="card">
+        <h3>Visión futura</h3>
+        <textarea placeholder="Escribe una carta a tu yo del mañana."></textarea>
       </div>
+    </div>
+  </section>
 
-      <div class="block">
-        <section class="card" id="modo-calma">
-          <h2>🎵 Modo calma (sonido suave)</h2>
-          <p class="muted">Elige tu propio audio desde tu computadora para acompañar tu calma.</p>
-          <input type="file" id="audioFile" accept="audio/*" />
-          <button id="playAudio" class="btn">▶️ Reproducir</button>
-          <button id="stopAudio" class="btn btn-secondary">⏹️ Detener</button>
-          <audio id="calmAudio"></audio>
-        </section>
+  <!-- Yūgen -->
+  <section id="yugen">
+    <h2>🎨 Yūgen — Arte y poesía</h2>
+    <p>Un espacio para lo poético, lo invisible y lo creativo.</p>
+    <button class="add-btn" onclick="addCard('yugen')">+ Agregar página de arte</button>
+    <div id="cards-yugen">
+      <div class="card">
+        <h3>Poema libre</h3>
+        <textarea placeholder="Escribe versos que reflejen tu estado emocional."></textarea>
       </div>
-
-      <div class="block">
-        <h3>Retos sin pantalla</h3>
-        <button id="offlineChallenge" class="btn btn-outline">Sugerir un reto</button>
-        <p id="challengeText" class="tip"></p>
+      <div class="card">
+        <h3>Manualidad sugerida</h3>
+        <textarea placeholder="Origami, collage o dibujo... describe tu creación."></textarea>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Economía consciente -->
-    <section class="card" id="economia-consciente">
-      <h2>💰 Economía consciente</h2>
-      <!-- ... resto de tu código igual ... -->
-    </section>
+  <script>
+    // Navegación
+    const buttons = document.querySelectorAll("nav button");
+    const sections = document.querySelectorAll("section");
+    buttons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        buttons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        sections.forEach(sec=>sec.classList.remove("active"));
+        document.getElementById(btn.dataset.target).classList.add("active");
+      });
+    });
 
-    <!-- Espacio libre -->
-    <section class="card" id="espacio-libre">
-      <h2>✍️ Espacio libre</h2>
-      <textarea id="freeSpace" rows="4" placeholder="Escribe, dibuja con palabras, crea libremente..."></textarea>
-      <div class="row">
-        <button id="saveFreeSpace" class="btn">Guardar</button>
-        <button id="creativeInspo" class="btn btn-outline">Inspiración creativa</button>
-      </div>
-      <p id="freeMsg" class="success"></p>
-      <p id="inspoText" class="tip"></p>
-    </section>
-
-    <!-- Personalización del fondo -->
-    <section class="personalizacion">
-      <h2>🎨 Personaliza tu fondo</h2>
-      <!-- ... resto de tu código igual ... -->
-    </section>
-
-    <!-- Ideas de manualidades -->
-    <section class="card" id="manualidades">
-      <!-- ... resto de tu código igual ... -->
-    </section>
-
-    <!-- Panel básico de progreso -->
-    <section class="card" id="progreso">
-      <h2>📈 Progreso emocional</h2>
-      <p class="muted">Resumen de cómo te has sentido esta semana.</p>
-      <canvas id="emotionChart"></canvas>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>Tu calma comienza aquí • El Diario de Zenjey</p>
-  </footer>
-
-  <script src="app.js"></script>
+    // Agregar tarjetas
+    function addCard(section){
+      const container = document.getElementById("cards-"+section);
+      const card = document.createElement("div");
+      card.className="card";
+      card.innerHTML=`
+        <h3>Nueva página</h3>
+        <textarea placeholder="Escribe aquí..."></textarea>
+      `;
+      container.appendChild(card);
+    }
+  </script>
 </body>
 </html>
