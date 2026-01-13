@@ -234,25 +234,25 @@ function sugerirManualidad(){
   document.getElementById("inspiracion").textContent=idea;
 }
 function cargarSpotify(){
-  const link=document.getElementById("spotifyLink").value.trim();
-  const player=document.getElementById("spotifyPlayer");
+  const link = document.getElementById("spotifyLink").value.trim();
+  const player = document.getElementById("spotifyPlayer");
 
-  if(!link.includes("spotify.com")){
+  if (!link.includes("spotify.com")) {
     alert("Ese no parece un enlace de Spotify 🎵");
     return;
   }
 
   // Detectar si es enlace de artista (no soportado)
-  if(link.includes("/artist/")){
+  if (link.includes("/artist/")) {
     alert("Lo siento 🌸, los enlaces de artista no se pueden mostrar aquí. Pega una canción, playlist o álbum.");
     return;
   }
 
-  // Limpiar parámetros extra (?si=...)
-  const limpio=link.split("?")[0];
-  const embedLink=limpio.replace("open.spotify.com","open.spotify.com/embed");
+  // Limpiar parámetros y regionales
+  const limpio = link.split("?")[0].replace("/intl-es", "").replace("/intl-en", "");
+  const embedLink = limpio.replace("open.spotify.com", "open.spotify.com/embed");
 
-  player.innerHTML=`
+  player.innerHTML = `
     <iframe style="border-radius:12px" 
             src="${embedLink}" 
             width="100%" height="380" frameborder="0" 
@@ -261,13 +261,13 @@ function cargarSpotify(){
   localStorage.setItem("spotifyLink", limpio);
 }
 
-// Al cargar la página, mostrar el reproductor si ya hay un enlace guardado
-window.addEventListener("load", ()=>{
-  const savedLink=localStorage.getItem("spotifyLink");
-  const player=document.getElementById("spotifyPlayer");
-  if(savedLink && player){
-    const embedLink=savedLink.replace("open.spotify.com","open.spotify.com/embed");
-    player.innerHTML=`
+// Mostrar el reproductor automáticamente si ya hay un enlace guardado
+window.addEventListener("load", () => {
+  const savedLink = localStorage.getItem("spotifyLink");
+  const player = document.getElementById("spotifyPlayer");
+  if (savedLink && player) {
+    const embedLink = savedLink.replace("open.spotify.com", "open.spotify.com/embed");
+    player.innerHTML = `
       <iframe style="border-radius:12px" 
               src="${embedLink}" 
               width="100%" height="380" frameborder="0" 
@@ -276,5 +276,6 @@ window.addEventListener("load", ()=>{
   }
 });
 // ====================
+
 
 
