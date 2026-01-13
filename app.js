@@ -233,5 +233,36 @@ function sugerirManualidad(){
   const idea=ideas[Math.floor(Math.random()*ideas.length)];
   document.getElementById("inspiracion").textContent=idea;
 }
+function cargarSpotify(){
+  const link=document.getElementById("spotifyLink").value.trim();
+  const player=document.getElementById("spotifyPlayer");
 
+  if(link.includes("spotify.com")){
+    const embedLink=link.replace("open.spotify.com","open.spotify.com/embed");
+    player.innerHTML=`
+      <iframe style="border-radius:12px" 
+              src="${embedLink}" 
+              width="100%" height="380" frameborder="0" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>`;
+    localStorage.setItem("spotifyLink", link);
+  } else {
+    alert("Por favor pega un enlace válido de Spotify 🎵");
+  }
+}
+
+// Al cargar la página, mostrar el reproductor si ya hay un enlace guardado
+window.addEventListener("load", ()=>{
+  const savedLink=localStorage.getItem("spotifyLink");
+  if(savedLink){
+    const embedLink=savedLink.replace("open.spotify.com","open.spotify.com/embed");
+    document.getElementById("spotifyPlayer").innerHTML=`
+      <iframe style="border-radius:12px" 
+              src="${embedLink}" 
+              width="100%" height="380" frameborder="0" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>`;
+  }
+});
 // ====================
+
