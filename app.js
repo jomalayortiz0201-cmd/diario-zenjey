@@ -1,4 +1,3 @@
-
 // ==================== Bienvenida con nombre y contraseña ====================
 function guardarCredenciales(){
   const nombre=document.getElementById("nombreUsuario").value;
@@ -33,6 +32,12 @@ function abrirDiario(){
   document.getElementById("seijaku").classList.add("active");
   const sonido=document.getElementById("sonido-apertura");
   if(sonido){ sonido.play().catch(()=>{}); }
+}
+
+// Botón "Hoy no"
+function entrarHoyNo(){
+  abrirDiario();
+  alert("Hoy no hiciste actividades, y está bien 🫶");
 }
 
 // ==================== Voz con reconocimiento ====================
@@ -108,14 +113,18 @@ function iniciarRespiracion(){
   },3000);
 }
 
-function registrarEstado(color){
-  const estados={verde:"Tranquilo",amarillo:"Inquieto",azul:"Reflexivo",rojo:"Triste"};
-  const registro={fecha:new Date().toLocaleDateString(),estado:color,significado:estados[color]};
-  const lista=JSON.parse(localStorage.getItem("emociones")||"[]");
-  lista.push(registro);
-  localStorage.setItem("emociones",JSON.stringify(lista));
-  alert(`Estado registrado: ${estados[color]}`);
-  guardarRacha("emociones");
+// Emojis emocionales (no se guardan)
+function mostrarEmoji(emoji){
+  document.getElementById("emoji-seleccion").textContent=`Hoy elegiste ${emoji}. Eso también cuenta 🌱`;
+}
+
+// Temporizador libre
+function iniciarTemporizador(segundos){
+  const cont=document.getElementById("temporizador");
+  cont.textContent=`⏳ Tiempo iniciado: ${segundos} segundos`;
+  setTimeout(()=>{
+    cont.textContent="Gracias por quedarte un momento 🌱";
+  },segundos*1000);
 }
 
 // ==================== Entelequia ====================
@@ -149,23 +158,37 @@ function guardarPoema(){
   alert("Poema guardado 🎨");
   guardarRacha("poemas");
 }
-// 🎨 Dibujo con colores y grosor
+
+// 🎨 Dibujo con soporte táctil
 const canvas=document.getElementById("lienzo");
 if(canvas){
   const ctx=canvas.getContext("2d");
   let dibujando=false;
 
+  // Mouse
   canvas.addEventListener("mousedown",()=>dibujando=true);
   canvas.addEventListener("mouseup",()=>dibujando=false);
   canvas.addEventListener("mousemove",e=>{
     if(!dibujando) return;
-    const color=document.getElementById("colorPincel").value;
-    const grosor=document.getElementById("grosorPincel").value;
-    ctx.fillStyle=color;
-    ctx.beginPath();
-    ctx.arc(e.offsetX,e.offsetY,grosor/2,0,Math.PI*2);
-    ctx.fill();
+    dibujar(ctx,e.offsetX,e.offsetY);
   });
+
+  // Touch
+  canvas.addEventListener("touchmove",e=>{
+    const rect=canvas.getBoundingClientRect();
+    const x=e.touches[0].clientX-rect.left;
+    const y=e.touches[0].clientY-rect.top;
+    dibujar(ctx,x,y);
+  });
+}
+
+function dibujar(ctx,x,y){
+  const color=document.getElementById("colorPincel").value;
+  const grosor=document.getElementById("grosorPincel").value;
+  ctx.fillStyle=color;
+  ctx.beginPath();
+  ctx.arc(x,y,grosor/2,0,Math.PI*2);
+  ctx.fill();
 }
 
 // 🧹 Limpiar lienzo
@@ -198,16 +221,7 @@ function mostrarGaleria(){
     galeria.appendChild(imagen);
   });
 }
-
-// Mostrar galería al cargar
 window.addEventListener("load",mostrarGaleria);
-
-// 🧹 Limpiar lienzo
-function limpiarLienzo(){
-  const ctx=canvas.getContext("2d");
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-
 
 function sugerirFrase(){
   const frases=["Tu calma es tu superpoder.","Respira, todo puede esperar.","Cada palabra que escribes es un pétalo."];
@@ -220,137 +234,4 @@ function sugerirManualidad(){
   document.getElementById("inspiracion").textContent=idea;
 }
 
-// ==================== Progreso ====================
-function dibujarGraficos(){
-  const emociones=JSON.parse(localStorage.getItem("emociones")||"[]");
-  const decisiones=JSON.parse(localStorage.getItem("decisiones")||"[]");
-
-  const ctx1=document.getElementById("graficoEmociones").getContext("2d");
-  new Chart(ctx1,{
-    type:"bar",
-    data:{
-      labels:emociones.map(e=>e.fecha),
-      datasets:[{label:"Emociones",data:emociones.map(e=>e.estado.length),backgroundColor:"rgba(59,181,167,0.6)"}]
-    }
-  });
-
-  const ctx2=document.getElementById("graficoDecisiones").getContext("2d");
-  new Chart(ctx2,{
-    type:"pie",
-    data:{
-      labels:["Deseos","Necesidades"],
-      datasets:[{data:[decisiones.filter(d=>d.tipo==="deseo").length,decisiones.filter(d=>d.tipo==="necesidad").length],backgroundColor:["#f7c6d0","#3bb5a7"]}]
-    }
-  });
-}
-function mostrarLogros(){
-  const rachas=JSON.parse(localStorage.getItem("rachas")||"{}");
-  const logros=document.getElementById("logros-contenido");
-  logros.innerHTML="";
-
-  const frases={
-    respiracion:"🌿 Practaste respiración consciente",
-    emociones:"🎨 Registraste tus emociones",
-    decisiones:"💡 Tomaste decisiones conscientes",
-    poemas:"📝 Escribiste poesía emocional"
-  };
-
-  for(const tipo in rachas){
-    if(rachas[tipo]>=3){
-      const item=document.createElement("p");
-      item.textContent=`${frases[tipo]} (${rachas[tipo]} veces)`;
-      logros.appendChild(item);
-    }
-  }
-}
-function retoDiario(){
-  const retos=[
-    "Escribe una carta a tu yo del futuro.",
-    "Haz una pausa de 3 minutos para respirar.",
-    "Dibuja cómo te sientes hoy.",
-    "Haz una lista de 3 deseos y 3 necesidades.",
-    "Escribe un poema con la palabra 'luz'."
-  ];
-  const reto=retos[Math.floor(Math.random()*retos.length)];
-  document.getElementById("reto").textContent=reto;
-}
-// ==================== Retos fuera de la app ====================
-function generarRetoFuera(){
-  const retos=[
-    {
-      titulo:"🌿 Camina descalza sobre el césped",
-      pasos:[
-        "Busca un lugar seguro con césped o tierra limpia.",
-        "Quítate los zapatos y siente el suelo bajo tus pies.",
-        "Respira profundamente mientras caminas lentamente.",
-        "Concéntrate en las sensaciones: frescura, textura, temperatura.",
-        "Al terminar, agradece el momento de conexión con la naturaleza."
-      ]
-    },
-    {
-      titulo:"🎶 Crea una canción con sonidos de tu casa",
-      pasos:[
-        "Elige objetos que produzcan sonidos (vasos, cucharas, puertas).",
-        "Hazlos sonar de diferentes maneras y escucha con atención.",
-        "Graba los sonidos con tu celular.",
-        "Combínalos como si fueran instrumentos musicales.",
-        "Ponle un nombre creativo a tu canción."
-      ]
-    },
-    {
-      titulo:"🧵 Haz una pulsera con hilos",
-      pasos:[
-        "Elige tres colores de hilo o lana.",
-        "Corta tiras largas y haz un nudo inicial.",
-        "Trenza los hilos con calma y paciencia.",
-        "Al llegar al final, haz un nudo fuerte.",
-        "Lleva tu pulsera como símbolo de tu creatividad."
-      ]
-    },
-    {
-      titulo:"📖 Escribe una carta a tu yo del futuro",
-      pasos:[
-        "Busca un lugar tranquilo y toma papel y lápiz.",
-        "Imagina cómo quieres estar dentro de 5 años.",
-        "Escribe tus sueños, metas y consejos para tu yo futuro.",
-        "Guarda la carta en un sobre y ponle la fecha.",
-        "Decide cuándo volverás a leerla."
-      ]
-    },
-    {
-      titulo:"🌸 Haz un mandala con objetos naturales",
-      pasos:[
-        "Sal a caminar y recoge hojas, piedras o flores.",
-        "En casa, limpia los objetos y colócalos en círculo.",
-        "Organiza los elementos formando patrones simétricos.",
-        "Admira tu mandala y tómale una foto.",
-        "Al terminar, devuelve los objetos a la naturaleza."
-      ]
-    },
-    {
-      titulo:"🕯️ Crea tu rincón de calma",
-      pasos:[
-        "Elige un espacio pequeño en tu casa.",
-        "Coloca una vela, una planta o un objeto que te dé paz.",
-        "Pon música suave o simplemente guarda silencio.",
-        "Siéntate allí unos minutos cada día.",
-        "Usa ese rincón como refugio emocional."
-      ]
-    }
-  ];
-
-  // Seleccionar un reto al azar
-  const reto=retos[Math.floor(Math.random()*retos.length)];
-
-  // Mostrar en la página (solo texto y pasos, sin enlaces)
-  const contenedor=document.getElementById("reto-fuera");
-  contenedor.innerHTML=`
-    <h3>${reto.titulo}</h3>
-    <ol>
-      ${reto.pasos.map(p=>`<li>${p}</li>`).join("")}
-    </ol>
-  `;
-}
-
-
-
+// ====================
