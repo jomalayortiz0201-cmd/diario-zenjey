@@ -35,6 +35,57 @@ section.active {display:block;}
 
 #bienvenida {text-align:center;}
 
+/* Frases empáticas al inicio */
+.mensaje-inicio {
+  font-style: italic;
+  color: var(--teal);
+  margin-bottom: 1rem;
+  background: #f0f9f5;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+/* Botones generales */
+button {
+  background: var(--teal);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background: #2a8c80; }
+
+/* Botón especial Hoy no */
+button.hoyno {
+  background: var(--pink);
+  color: var(--ink);
+  font-weight: bold;
+}
+button.hoyno:hover { background: #f59ab0; }
+
+/* Emojis emocionales */
+#seijaku button {
+  font-size: 1.6rem;
+  padding: 10px 14px;
+}
+#emoji-seleccion {
+  margin-top: 10px;
+  font-weight: bold;
+  color: var(--coral);
+}
+
+/* Temporizador libre */
+#temporizador {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: var(--teal);
+  font-weight: bold;
+}
+
+/* Retos */
 #reto, #reto-fuera {
   font-size: 1.5rem;
   line-height: 1.8;
@@ -45,13 +96,15 @@ section.active {display:block;}
   box-shadow: 0 6px 20px rgba(0,0,0,.1);
   margin-top: 1.5rem;
 }
- /* 🎨 Yūgen — Estilos para dibujo libre */
-/* 🎨 Estilos para el lienzo de dibujo */
+
+/* 🎨 Yūgen — Estilos para dibujo libre */
 #lienzo {
   margin-top: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: crosshair;
   background: #fff;
+  border: 2px dashed var(--blue);
+  touch-action: none; /* evita scroll accidental en móviles */
 }
 
 #colorPincel, #grosorPincel {
@@ -62,6 +115,16 @@ section.active {display:block;}
   border: 2px solid var(--teal);
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+
+/* Spotify embebido */
+#spotifyPlayer iframe {
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
 }
 
 /* Overlay de carga */
@@ -87,4 +150,5 @@ section.active {display:block;}
   margin-bottom: .8rem;
 }
 @keyframes spin { to { transform: rotate(360deg);} }
+
 
