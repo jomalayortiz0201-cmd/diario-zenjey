@@ -16,6 +16,7 @@
     <input id="claveUsuario" type="password" placeholder="Tu contraseña">
     <button onclick="guardarCredenciales()">Guardar</button>
     <button onclick="iniciarSesion()">Abrir diario</button>
+    <button onclick="entrarHoyNo()">Hoy no 🫶</button>
     <p>O di en voz alta: <strong>“Abrir mi diario”</strong></p>
     <button onclick="iniciarVoz()">🎤 Usar voz</button>
   </section>
@@ -37,23 +38,34 @@
     <button data-target="progreso">Progreso</button>
     <button data-target="logros">Logros</button>
     <button data-target="retos-fuera">Retos fuera</button>
-    <button data-target="personalizacion">Personalización</button>
+    <button data-target="musica">Música</button>
   </nav>
 
   <!-- Secciones -->
   <section id="seijaku">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>🧘 Seijaku — Núcleo emocional</h2>
     <button onclick="iniciarRespiracion()">Iniciar respiración guiada</button>
     <div id="respiracion-texto"></div>
 
     <h3>Semáforo emocional</h3>
-    <button onclick="registrarEstado('verde')">🟢 Tranquilo</button>
-    <button onclick="registrarEstado('amarillo')">🟡 Inquieto</button>
-    <button onclick="registrarEstado('azul')">🔵 Reflexivo</button>
-    <button onclick="registrarEstado('rojo')">🔴 Triste</button>
+    <button onclick="mostrarEmoji('😔')">😔</button>
+    <button onclick="mostrarEmoji('😃')">😃</button>
+    <button onclick="mostrarEmoji('😐')">😐</button>
+    <button onclick="mostrarEmoji('😡')">😡</button>
+    <button onclick="mostrarEmoji('😭')">😭</button>
+    <button onclick="mostrarEmoji('🌱')">🌱</button>
+    <div id="emoji-seleccion"></div>
+
+    <h3>Temporizador libre</h3>
+    <button onclick="iniciarTemporizador(30)">⏳ 30 segundos</button>
+    <button onclick="iniciarTemporizador(60)">⏳ 1 minuto</button>
+    <button onclick="iniciarTemporizador(180)">⏳ 3 minutos</button>
+    <div id="temporizador"></div>
   </section>
 
   <section id="entelequia">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>🌟 Entelequia — Sueños y economía consciente</h2>
     <input id="decision-texto" placeholder="Ej. Quiero comprar una mochila">
     <select id="decision-tipo">
@@ -68,23 +80,24 @@
   </section>
 
   <section id="yugen">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>🎨 Yūgen — Arte y poesía</h2>
     <textarea id="poema-texto" placeholder="Escribe tu poema..."></textarea>
     <button onclick="guardarPoema()">Guardar poema</button>
 
-   <h3>Dibujo libre</h3>
-<div>
-  <label>🎨 Color: </label>
-  <input type="color" id="colorPincel" value="#000000">
-  <label>✏️ Grosor: </label>
-  <input type="range" id="grosorPincel" min="1" max="20" value="2">
-</div>
-<canvas id="lienzo" width="400" height="250" style="border:1px solid #ccc;"></canvas>
-<div>
-  <button onclick="limpiarLienzo()">🧹 Limpiar</button>
-  <button onclick="guardarDibujo()">💾 Guardar dibujo</button>
-</div>
-<div id="galeria-dibujos"></div>
+    <h3>Dibujo libre</h3>
+    <div>
+      <label>🎨 Color: </label>
+      <input type="color" id="colorPincel" value="#000000">
+      <label>✏️ Grosor: </label>
+      <input type="range" id="grosorPincel" min="1" max="20" value="2">
+    </div>
+    <canvas id="lienzo" width="400" height="250" style="border:1px solid #ccc;"></canvas>
+    <div>
+      <button onclick="limpiarLienzo()">🧹 Limpiar</button>
+      <button onclick="guardarDibujo()">💾 Guardar dibujo</button>
+    </div>
+    <div id="galeria-dibujos"></div>
 
     <h3>Inspiración</h3>
     <button onclick="sugerirFrase()">Frase inspiradora</button>
@@ -93,6 +106,7 @@
   </section>
 
   <section id="progreso">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>📊 Progreso emocional</h2>
     <canvas id="graficoEmociones"></canvas>
     <h2>📈 Decisiones</h2>
@@ -100,6 +114,7 @@
   </section>
 
   <section id="logros">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>🌳 Tu jardín emocional</h2>
     <div id="logros-contenido"></div>
     <h3>🎯 Reto diario</h3>
@@ -108,21 +123,21 @@
   </section>
 
   <section id="retos-fuera">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
     <h2>🌟 Retos fuera de la app</h2>
     <button onclick="generarRetoFuera()">Generar reto</button>
     <div id="reto-fuera"></div>
   </section>
 
-  <section id="personalizacion">
-    <h2>🎶 Personaliza tu diario</h2>
-    <p><strong>Fondo:</strong> Elige una imagen</p>
-    <input type="file" accept="image/*" onchange="cambiarFondo(event)">
-    <p><strong>Música:</strong> Sube tu pista favorita</p>
-    <input type="file" accept="audio/*" onchange="cargarMusica(event)">
-    <audio id="musica" controls></audio>
+  <section id="musica">
+    <p class="mensaje-inicio">🌱 No estás obligado a hacer esto.</p>
+    <h2>🎶 Tu música en Zenjey</h2>
+    <p>Pega el enlace de tu playlist o canción de Spotify:</p>
+    <input type="text" id="spotifyLink" placeholder="https://open.spotify.com/..." style="width:80%">
+    <button onclick="cargarSpotify()">Cargar música</button>
+    <div id="spotifyPlayer"></div>
   </section>
 
   <script src="app.js" defer></script>
 </body>
 </html>
-
