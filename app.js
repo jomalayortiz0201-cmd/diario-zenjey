@@ -233,6 +233,27 @@ function sugerirManualidad(){
   const idea=ideas[Math.floor(Math.random()*ideas.length)];
   document.getElementById("inspiracion").textContent=idea;
 }
+function retoDiario(){
+  const retos = [
+    "Escribe tres cosas que agradeces hoy.",
+    "Haz una pausa de 5 minutos para respirar.",
+    "Dibuja cómo te sientes ahora mismo.",
+    "Camina un rato observando la naturaleza."
+  ];
+  const reto = retos[Math.floor(Math.random() * retos.length)];
+  document.getElementById("reto").textContent = reto;
+}
+
+function generarRetoFuera(){
+  const retosFuera = [
+    "Saluda a alguien que no conozcas.",
+    "Haz una buena acción anónima.",
+    "Dedica tiempo a escuchar a un amigo.",
+    "Explora un lugar nuevo de tu barrio."
+  ];
+  const retoFuera = retosFuera[Math.floor(Math.random() * retosFuera.length)];
+  document.getElementById("reto-fuera").textContent = retoFuera;
+}
 function cargarSpotify(){
   const link = document.getElementById("spotifyLink").value.trim();
   const player = document.getElementById("spotifyPlayer");
@@ -276,6 +297,7 @@ window.addEventListener("load", () => {
   }
 });
 // ====================
+
 
 
 
